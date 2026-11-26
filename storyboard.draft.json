@@ -1,0 +1,181 @@
+{
+  "title": "Youth of the Future",
+  "logline": "An Ethiopian boy growing up in Riyadh learns Arabic from television cartoons, discovering a shared identity that he, as an adult, now uses to create his own stories.",
+  "audience": "People who grew up in the Gulf/Arab world in the 2000s, especially children of migrant families who learned Arabic from TV, seeking warm nostalgia and quiet pride.",
+  "intent": "To evoke warm nostalgia for a shared childhood experience, followed by a feeling of quiet pride in the protagonist's journey of cultural integration and creative self-expression, highlighting the idea of having 'two homes, one childhood'.",
+  "language": {
+    "narration": "ar-SA",
+    "subtitles": "en"
+  },
+  "style": {
+    "block": "Warm, soft 2D illustrated look, gouache and storybook style, vibrant colours, gentle brushstrokes, natural textures, warm lamp light, cool TV glow, smooth gradients, nostalgic atmosphere.",
+    "negative": "photorealistic, 3D, harsh lighting, sharp edges, text, logos, cartoon characters, brand names, distorted, ugly, noisy, grainy, blurry, low resolution, amateur, black and white, monochrome, gloomy, sad, disturbing, disfigured, extra limbs, abstract art, modern art."
+  },
+  "characters": [
+    {
+      "id": "boy",
+      "description": "An anonymous illustrated boy, about 8 years old, with dark skin and short curly hair, wearing simple, comfortable clothes, consistent appearance, gentle expression."
+    },
+    {
+      "id": "young_man",
+      "description": "An anonymous illustrated young man, about 25 years old, with dark skin and short curly hair, wearing a modern shirt, consistent appearance, thoughtful expression."
+    },
+    {
+      "id": "mother_hands",
+      "description": "Only the hands of a woman with dark skin, preparing food, wearing a simple bracelet, consistent appearance, graceful movements."
+    },
+    {
+      "id": "father_silhouette",
+      "description": "Only the silhouette of a man at a doorway, tall and broad-shouldered, casting a long shadow into a warmly lit room, consistent appearance, calm presence."
+    }
+  ],
+  "voice": {
+    "name": "Charon",
+    "style": "warm, slow, reflective, gentle"
+  },
+  "music": {
+    "caption": "Quiet instrumental underscore, gentle, nostalgic, reflective, slow tempo, featuring oud, flute, and light percussion, ambient texture, no strong lead melody, building slightly at key emotional points, resolving peacefully.",
+    "bpm": 80,
+    "cues": [
+      {
+        "at_shot": "s01",
+        "does": "enters softly, establishing a warm, nostalgic mood"
+      },
+      {
+        "at_shot": "s05",
+        "does": "builds subtly with a hint of wonder, then softens"
+      },
+      {
+        "at_shot": "s08",
+        "does": "returns with a slightly more mature, reflective theme, building to a gentle resolution"
+      }
+    ]
+  },
+  "shots": [
+    {
+      "id": "s01",
+      "duration": 7,
+      "reason": "To establish the warm, multicultural home environment and the boy's heritage.",
+      "shot_size": "wide",
+      "characters": [
+        "boy",
+        "mother_hands"
+      ],
+      "image_prompt": "A warm, cozy living room in a Riyadh apartment, floor cushions, an old television, a doorway leading to a kitchen where faint light glows. The boy is sitting on a cushion, mother's hands are visible in the kitchen background.",
+      "motion_prompt": "Subtle camera pan from left to right, revealing the space.",
+      "narration": "في بيتنا في الرياض، كنا نتحدث الأمهرية. كانت رائحة المطبخ دائمًا مليئة بالتوابل الإثيوبية.",
+      "subtitle": "In our home in Riyadh, we spoke Amharic. The kitchen always smelled of Ethiopian spices."
+    },
+    {
+      "id": "s02",
+      "duration": 6,
+      "reason": "To emphasize the mother's role in preserving cultural identity through food.",
+      "shot_size": "insert",
+      "characters": [
+        "mother_hands"
+      ],
+      "image_prompt": "Close-up on mother's hands skillfully preparing injera on a traditional round griddle, with vibrant red berbere spice and other ingredients visible on a counter.",
+      "motion_prompt": "Gentle steam rising from the griddle, hands moving slowly and gracefully.",
+      "narration": "أمي كانت تحضر الإنجيرا والشيرا، وكانت ألوان البهارات الزاهية تملأ المكان.",
+      "subtitle": "My mother would prepare injera and shiro, and the bright colours of the spices filled the air."
+    },
+    {
+      "id": "s03",
+      "duration": 7,
+      "reason": "To introduce the pivotal role of television in the boy's cultural immersion.",
+      "shot_size": "medium",
+      "characters": [
+        "boy"
+      ],
+      "image_prompt": "The boy sitting on a floor cushion in the dimly lit salon, captivated by the glow of an old television screen, which shows abstract colourful light patterns.",
+      "motion_prompt": "Slow zoom in on the boy's face, the TV light subtly flickering.",
+      "narration": "بعد المدرسة، كنت أجلس وحيداً أمام التلفاز، أشاهد قناة سبيستون العربية.",
+      "subtitle": "After school, I would sit alone in front of the television, watching the Arabic channel, Spacetoon."
+    },
+    {
+      "id": "s04",
+      "duration": 8,
+      "reason": "To highlight the personal connection and method of language acquisition.",
+      "shot_size": "close",
+      "characters": [
+        "boy"
+      ],
+      "image_prompt": "Close-up of the boy's face, bathed in the soft, cool glow of the television, eyes wide with wonder, a slight smile on his lips.",
+      "motion_prompt": "Subtle shift in the boy's expression, a gentle tilt of the head.",
+      "narration": "تعلمت اللغة العربية من الرسوم المتحركة، ومن أغاني البداية التي كنت أغنيها بصوت عالٍ.",
+      "subtitle": "I learned Arabic from the cartoons, and from the opening songs that I would sing loudly."
+    },
+    {
+      "id": "s05",
+      "duration": 8,
+      "reason": "To show the specific message that resonated with him and his generation.",
+      "shot_size": "medium",
+      "characters": [
+        "boy"
+      ],
+      "image_prompt": "The boy, full of energy, singing along in front of the TV. The screen shows abstract, glowing planets and stars, representing a cartoon intro. The room is still dimly lit, illuminated by the TV's cool glow.",
+      "motion_prompt": "The boy sways slightly, the abstract planets on the screen gently rotate.",
+      "narration": "كانت سبيستون تقول: 'قناة شباب المستقبل'. وكنا نحن نؤمن بذلك.",
+      "subtitle": "Spacetoon used to say: 'The channel of the youth of the future.' And we believed it."
+    },
+    {
+      "id": "s06",
+      "duration": 7,
+      "reason": "To show another aspect of home life and the father's presence, adding to the warm domestic atmosphere.",
+      "shot_size": "wide",
+      "characters": [
+        "boy",
+        "father_silhouette"
+      ],
+      "image_prompt": "A warm, inviting living room in the evening, with a table set for dinner. The boy is looking towards a doorway where the father's silhouette is visible, entering from a brightly lit hallway.",
+      "motion_prompt": "A subtle shift in light as the father's silhouette moves into the doorway.",
+      "narration": "في المساء، كنا ننتظر أبي ليعود إلى البيت، والبيت يدفئه ضوء المصباح.",
+      "subtitle": "In the evening, we would wait for my father to return home, the house warmed by lamplight."
+    },
+    {
+      "id": "s07",
+      "duration": 8,
+      "reason": "To show the integration into the broader Saudi culture and the joy of shared experiences.",
+      "shot_size": "medium",
+      "characters": [
+        "boy"
+      ],
+      "image_prompt": "The boy sharing kabsa and dates with two other diverse children in an outdoor setting, perhaps a park or courtyard. They are laughing, and the scene is bright and friendly.",
+      "motion_prompt": "Gentle laughter and subtle movements as children interact and share food.",
+      "narration": "في الخارج، شاركت أصدقائي الطعام السعودي، وكنا نغني الأغاني نفسها.",
+      "subtitle": "Outside, I shared Saudi food with my friends, and we sang the same songs."
+    },
+    {
+      "id": "s08",
+      "duration": 9,
+      "reason": "To transition to the present and show the fulfillment of the 'youth of the future' prophecy.",
+      "shot_size": "medium_close",
+      "characters": [
+        "young_man"
+      ],
+      "image_prompt": "A young man (the grown-up boy) sitting in a modern, well-lit apartment, looking thoughtfully at a tablet or laptop screen, which reflects abstract, colourful light. The room is clean and minimalist.",
+      "motion_prompt": "Slow pan from the screen to the young man's reflective face, a soft glow on his features.",
+      "narration": "الآن، بعد سنوات، أصبحت جزءًا من هذا المستقبل الذي تحدثوا عنه.",
+      "subtitle": "Now, years later, I have become a part of this future they spoke of."
+    },
+    {
+      "id": "s09",
+      "duration": 9,
+      "reason": "To culminate the story with a sense of pride and active creation, tying back to the initial theme.",
+      "shot_size": "close",
+      "characters": [
+        "young_man"
+      ],
+      "image_prompt": "Close-up of the young man's hands on a keyboard or stylus on a tablet, with abstract, creative visuals (like glowing planets or swirling colours) appearing on the screen, reflecting his creative work.",
+      "motion_prompt": "Subtle, deliberate movements of the hands, as if drawing or typing, with the screen's visuals gently animating.",
+      "narration": "أصنع قصصي الخاصة، وأشاركها مع العالم. هم كانوا على حق.",
+      "subtitle": "I create my own stories, and share them with the world. They were right."
+    }
+  ],
+  "end_card": {
+    "lines": [
+      "Made with AI tools.",
+      "شكرًا للمشاهدة."
+    ]
+  }
+}
