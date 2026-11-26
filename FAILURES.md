@@ -99,3 +99,15 @@ What broke, what I tried, what fixed it. Newest at the bottom.
   (no new TTS calls, so no quota used); the narration stage repairs old files automatically. After: line edges at
   −50 to −69 dB, and the film's true peak dropped to −1.2 dBTP (the buzz had been the loudest thing in the mix).
 - **Lesson:** same API, different model, different output format. Check what you get back, not what the docs imply.
+
+## F12: The image safety filter blocked a shot, then let the same input through
+- **What broke:** during the recorded walkthrough I changed s06 live to "holding a small toy microphone". Cloudflare
+  returned **HTTP 400, code 3030: "Your output has been flagged"**. The pipeline stopped and logged the error in
+  `runs.jsonl`, as it should.
+- **Tried:** tested three other wordings outside the pipeline (clapping, a toy drum, the original); all three passed.
+  Then the **exact same microphone prompt and seed passed on the next try** (logged 6 minutes later).
+- **Why it matters:** the filter judges the *output*, and it isn't deterministic: same input, flagged once, passed once.
+  Scenes with a child are where it trips.
+- **Fixed / decided:** used "clapping his hands" for the demo, then put s06 back to its published prompt so the repo
+  still rebuilds the film that was posted (the original keyframe is a cache hit). Next step: treat code 3030 as
+  retryable once, with a different seed, instead of stopping the run.

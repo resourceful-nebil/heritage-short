@@ -9,6 +9,7 @@ in, the finished film out (9:16 and 16:9), using free AI models only.
 
 **Watch:** [vertical 9:16](https://drive.google.com/file/d/13RIx554GZ6rWLNbxukILUClSHbLYkZYg/view?usp=sharing) ·
 [horizontal 16:9](https://drive.google.com/file/d/1Jj3ecnnuerfIo5-OJoSrlDh2KbB8WAuN/view?usp=sharing) ·
+[walkthrough (4:49)](https://drive.google.com/file/d/1dUXu--SAWAUdl3R2iIJImSNcsqLi287W/view?usp=sharing) ·
 [report](REPORT.md) · [public post (YouTube Short, AI label on)](https://youtube.com/shorts/07Ya2xHqOP0)
 
 ## Run it (one command)
@@ -95,7 +96,7 @@ Details: [ARCHITECTURE.md](ARCHITECTURE.md).
 |---|---|
 | [DESIGN.md](DESIGN.md) | who it's for, the feeling, **two user tests with 3 people each** (verbatim) and what changed |
 | [EXPERIMENTS.md](EXPERIMENTS.md) | hypothesis → change → result: image model, TTS model, score choice by measurement, ... |
-| [FAILURES.md](FAILURES.md) | 11 real failures: a TTS that invented memories, a 20-hour retry, a WAV inside a WAV, ... |
+| [FAILURES.md](FAILURES.md) | 12 real failures: a TTS that invented memories, a 20-hour retry, a WAV inside a WAV, ... |
 | [COSTS.md](COSTS.md) | measured time per stage, quotas, GPU time |
 | [ETHICS.md](ETHICS.md) | consent, licences, AI labelling, what I chose not to use |
 
