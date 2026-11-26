@@ -76,5 +76,50 @@ Sent `film_9x16.mp4` to 3 people. Same three questions. Answers are copied word 
 
 Only the five changed shots were re-rendered (cache); everything else, including all narration, was reused.
 
-## User test 2
-_To do with the near-final cut (real score)._
+## User test 2: near-final cut (real score, test-1 fixes), 26 Nov 2026
+Same 3 people, new questions aimed at what I changed. Answers copied word for word (lightly trimmed where marked).
+
+### Person 1
+1. **Did the Dad scene make sense this time?** "Yes, it fits naturally now. The mention of waiting for the father's key at
+   the door ('صوت مفتاح أبي في الباب') grounds the nostalgic childhood memories of cartoons and food in the warmth of a
+   real family home environment."
+2. **Does the music help or distract?** "It definitely helps. The gentle, nostalgic background score enhances the
+   emotional weight of growing up between two cultures [...]"
+3. **One thing you'd still change?** "The pacing could be slightly smoothed out right around the transition from the
+   outdoor neighborhood scenes back to the home evening routine, giving the visual rhythm a bit more breathing room."
+
+### Person 2
+1. "Yes, the Dad scene works now. He's walking *in* through the open door with his briefcase, facing us, and the boy is
+   running up to grab his hand. The picture and the line [...] finally say the same thing. [...] It also gives the film
+   an emotional beat right before the jump to adulthood, so the ending lands harder than before." Also noticed the
+   planets shot breaks up the TV shots and "the living room (the blue rug, the lamp, the TV) stays consistent".
+2. "Remove the transitional noise."
+3. "The one thing I'd still change is the opening. The first 16 seconds are still two nearly still images [...] on a
+   vertical feed a lot of viewers decide in the first 2–3 seconds. I'd cut the skyline to about 3 seconds, or open on
+   the boy and let 'I was born in Riyadh in 2001' play over him."
+
+### Person 3
+1. "Yes, it makes more sense now. The father returning and holding the child's hand connects better with the childhood
+   memories and the emotional message."
+2. "The music helps. It adds to the nostalgic atmosphere and makes the childhood memories feel more emotional without
+   taking away from the story."
+3. "I'd make the transition between the childhood memories and the present-day version of the narrator a little smoother.
+   That would make the ending more impactful."
+
+### What I learned
+- **The test-1 fix worked:** 3 of 3 now read the Dad scene as an arrival. The picture and the words agree.
+- **The music works** (3 of 3), but there was a **noise at the transitions** (Person 2, and me). It turned out to be a
+  decoding bug, not the music (FAILURES.md F11).
+- **The child-to-adult jump** came up again (Person 3, and Person 1 in test 1): two tests, same note, so it is real.
+- **The opening** came up again (Person 2, both tests).
+
+### What I changed
+| Feedback | Change |
+|---|---|
+| Transition noise (P2) | Found and fixed a WAV-inside-a-WAV bug: click + 0.16 s buzz at every line (F11) |
+| Slow opening (P2, twice) | s01 now **opens on the boy** at the window, looking out over Riyadh's satellite dishes and a minaret, with the TV already in the room. The tester's own suggestion. |
+| Child-to-adult jump (P3; P1 in test 1) | New storyboard field `transition_in: "dip"`: a 0.4 s fade to black and back before s09, so the jump in time reads as deliberate |
+| Pacing outdoor → home (P1) | Not changed: one note from one person; the dip now marks the bigger jump |
+
+I also wanted to use the background sound from one of the Spacetoon videos I was sent. I didn't: it belongs to
+someone else, and the brief asks for original music. The score is my own ACE-Step track (EXPERIMENTS.md E6).

@@ -86,3 +86,16 @@ What broke, what I tried, what fixed it. Newest at the bottom.
 - **Fixed:** two passes: measure the whole mix first, then apply one linear gain from the measured values, with a
   −1.5 dBTP ceiling to leave room for AAC. Result: **−14.7 LUFS, −1.1 dBTP** in both exports (the peak limit stops it
   going louder; within 1 LU of the target).
+
+## F11: A click and a buzz at every voice line (a WAV inside a WAV)
+- **What broke:** in user test 2, Person 2 wrote "Remove the transitional noise", and I heard it too: a click at the start
+  and a short harsh noise at the end of every narration line.
+- **Found by measuring, not guessing:** the first and last 30 ms of every line peaked at **0 dBFS** (full scale), where a
+  voice line should be near silence. The raw bytes after my WAV header started with `RIFF....WAVEfmt`: a second header.
+- **Why:** `gemini-2.5-flash-preview-tts` returns raw PCM, but `gemini-3.8-flash-tts` returns a **complete WAV file**
+  (header + audio + a trailing metadata chunk). My code wrapped it in another header, so the inner header played as a
+  click and the metadata chunk (text bytes) played as a **0.16 s full-scale buzz**.
+- **Fixed:** the decoder now checks for `RIFF` and reads only the audio frames. Existing files were repaired in place
+  (no new TTS calls, so no quota used); the narration stage repairs old files automatically. After: line edges at
+  −50 to −69 dB, and the film's true peak dropped to −1.2 dBTP (the buzz had been the loudest thing in the mix).
+- **Lesson:** same API, different model, different output format. Check what you get back, not what the docs imply.
