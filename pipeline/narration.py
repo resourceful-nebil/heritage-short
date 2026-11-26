@@ -57,6 +57,8 @@ def run(only: set[str] | None = None) -> dict[str, Path]:
             continue
         hit = existing(board, shot)
         if hit and cached(hit, f"narration {shot['id']}"):
+            if gemini.repair_nested_wav(hit):  # files made before the F11 fix: strip the inner WAV header/tail
+                print(f"  repaired   narration {shot['id']}: removed nested WAV header and trailing chunk (F11)")
             made[shot["id"]] = hit
             continue
         for model in models():

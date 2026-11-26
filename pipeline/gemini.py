@@ -63,15 +63,39 @@ def tts(text: str, *, model: str, voice: str, style: str, out: Path) -> tuple[fl
     }
     data, latency = _post(model, body)
     part = data["candidates"][0]["content"]["parts"][0]["inlineData"]
-    pcm = base64.b64decode(part["data"])
+    audio = base64.b64decode(part["data"])
     rate = 24000
     mime = part.get("mimeType", "")
     if "rate=" in mime:
         rate = int(mime.split("rate=")[1].split(";")[0])
     out.parent.mkdir(parents=True, exist_ok=True)
-    with wave.open(str(out), "wb") as w:
-        w.setnchannels(1)
-        w.setsampwidth(2)
-        w.setframerate(rate)
-        w.writeframes(pcm)
+    write_wav(audio, rate, out)
     return latency, data.get("usageMetadata", {})
+
+
+def write_wav(audio: bytes, rate: int, out: Path) -> None:
+    """Older TTS models return raw 16-bit PCM; gemini-3.8-flash-tts returns a complete WAV file (RIFF header + data +
+    a trailing metadata chunk). Wrapping that in another header made every line start with a click and end with a
+    0.16 s full-scale buzz (FAILURES.md F11). So: if it is already a WAV, read only its audio frames."""
+    import io
+
+    channels, width = 1, 2
+    if audio[:4] == b"RIFF":
+        with wave.open(io.BytesIO(audio)) as inner:
+            channels, width, rate = inner.getnchannels(), inner.getsampwidth(), inner.getframerate()
+            audio = inner.readframes(inner.getnframes())
+    with wave.open(str(out), "wb") as w:
+        w.setnchannels(channels)
+        w.setsampwidth(width)
+        w.setframerate(rate)
+        w.writeframes(audio)
+
+
+def repair_nested_wav(path: Path) -> bool:
+    """Fix a file written before the F11 fix (a WAV inside a WAV) in place, without calling the API again."""
+    with wave.open(str(path)) as outer:
+        rate, frames = outer.getframerate(), outer.readframes(outer.getnframes())
+    if frames[:4] != b"RIFF":
+        return False
+    write_wav(frames, rate, path)
+    return True
