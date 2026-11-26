@@ -1,0 +1,47 @@
+{
+  "mode": "film",
+  "total_s": 78.66,
+  "durations": {
+    "s01": 8.95,
+    "s02": 8.1,
+    "s03": 6.69,
+    "s04": 6.0,
+    "s05": 8.03,
+    "s06": 7.0,
+    "s07": 8.89,
+    "s08": 7.0,
+    "s09": 6.0,
+    "s10": 8.0
+  },
+  "real_score": false,
+  "music": "placeholder.wav",
+  "picture": [
+    "s01-b5201e7d3f04.mp4",
+    "s02-79f26c31eb4b.mp4",
+    "s03-50ad68f0b148.mp4",
+    "s04-7126ce2c73f9.mp4",
+    "s05-50d6f08071f2.mp4",
+    "s06-6b1ea04ac916.mp4",
+    "s07-58a1cd00e2a0.mp4",
+    "s08-e9c3af02fc13.mp4",
+    "s09-bbb42883d8e9.mp4",
+    "s10-626f39109285.mp4",
+    "endcard-0c9d87006e5f.mp4"
+  ],
+  "shot_sources": [
+    "s01: kenburns",
+    "s02: kenburns",
+    "s03: kenburns",
+    "s04: kenburns",
+    "s05: kenburns",
+    "s06: kenburns",
+    "s07: kenburns",
+    "s08: kenburns",
+    "s09: kenburns",
+    "s10: kenburns"
+  ],
+  "exports": {
+    "9x16": "outputs\\final\\film_9x16.mp4",
+    "16x9": "outputs\\final\\film_16x9.mp4"
+  }
+}
