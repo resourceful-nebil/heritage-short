@@ -29,6 +29,43 @@ def placeholder(seconds: float = 120.0) -> Path:
     return PLACEHOLDER
 
 
+CANDIDATES = OUT / "music" / "candidates"
+
+
+def import_candidates(src: str) -> None:
+    """Unpack score_candidates.zip from the Kaggle notebook and log every candidate (ok or failed) to runs.jsonl."""
+    import json
+    import zipfile
+
+    CANDIDATES.mkdir(parents=True, exist_ok=True)
+    path = Path(src)
+    if path.suffix == ".zip":
+        with zipfile.ZipFile(path) as z:
+            for member in z.namelist():
+                name = Path(member).name
+                if name and (name.endswith(".wav") or name == "manifest.json"):
+                    (CANDIDATES / name).write_bytes(z.read(member))
+    manifest = json.loads((CANDIDATES / "manifest.json").read_text(encoding="utf-8"))
+    for row in manifest["candidates"]:
+        out = CANDIDATES / row["file"] if row.get("file") else None
+        log_call("music", manifest["model"], params={k: manifest[k] for k in ("caption", "bpm", "key", "duration", "inference_steps", "gpu", "repo_commit")},
+                 seed=row["seed"], latency_s=row.get("seconds", 0), status=row["status"], output=out,
+                 note=f"Kaggle GPU; model load {manifest['load_seconds']}s (once per session)")
+        print(f"  imported   seed {row['seed']}: {row['status']} ({row.get('seconds')} s GPU)")
+
+
+def choose(name: str) -> None:
+    """Make one candidate the score (e.g. `seed22`)."""
+    import shutil
+
+    src = CANDIDATES / (name if name.endswith(".wav") else f"{name}.wav")
+    if not src.exists():
+        raise SystemExit(f"{src} not found; available: {[p.stem for p in CANDIDATES.glob('*.wav')]}")
+    shutil.copyfile(src, SCORE)
+    log_call("music", "choice", params={"chosen": src.name}, latency_s=0, output=SCORE, note="chosen by listening, reasons in EXPERIMENTS.md")
+    print(f"  score      {src.name} -> {SCORE.relative_to(OUT.parent)}")
+
+
 def track(allow_placeholder: bool = True) -> tuple[Path, bool]:
     """The music file to use, and whether it is the real score."""
     if SCORE.exists():

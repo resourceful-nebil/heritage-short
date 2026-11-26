@@ -15,3 +15,5 @@ outputs/assembly/
 outputs/music/placeholder.wav
 # narration takes rejected by the length check (evidence is in runs.jsonl)
 outputs/narration/*-rejected.wav
+# raw score candidates are large; the chosen one is outputs/music/score.wav
+outputs/music/candidates/*.wav
