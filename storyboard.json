@@ -60,10 +60,12 @@
     {
       "id": "s01",
       "duration": 7,
-      "shot_size": "extreme_wide",
-      "characters": [],
-      "reason": "Establish where and when: Riyadh, 2001, a city that is home but not the parents' country.",
-      "image_prompt": "Riyadh apartment rooftops at dusk in the early 2000s, many satellite dishes on flat roofs, one minaret in the distance, empty orange and purple sky, warm lights glowing in the windows, no people",
+      "shot_size": "wide",
+      "characters": [
+        "boy"
+      ],
+      "reason": "Open on the boy, not an empty skyline (test 2: viewers decide in the first seconds), and place him in Riyadh, 2001.",
+      "image_prompt": "the boy standing at an open apartment window at dusk, seen from slightly behind and to the side so his face is in profile, looking out over Riyadh rooftops covered with satellite dishes, one minaret in the distance, orange and purple sky, warm light behind him",
       "motion_prompt": "slow push in over the rooftops",
       "kenburns": "in",
       "seed": 101,
@@ -189,7 +191,8 @@
       "kenburns": "in",
       "seed": 109,
       "narration": "قالوا عنّا: شباب المستقبل.",
-      "subtitle": "They called us the youth of the future."
+      "subtitle": "They called us the youth of the future.",
+      "transition_in": "dip"
     },
     {
       "id": "s10",
