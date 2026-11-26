@@ -82,11 +82,11 @@ flowchart LR
 ### 3. When a model fails
 ```mermaid
 flowchart LR
-    call["AI call"] --> r{"result?"}
-    r -->|"429 / 5xx"| w["wait 4 → 8 → 16 s<br/>(or the server retryDelay)"] --> call
-    r -->|"server says retry in 20 h<br/>(daily quota)"| next["next model in the chain<br/>(TTS fallbacks)"]
-    r -->|"200 but audio too long<br/>for its words"| rej["reject take, log it,<br/>try next model"] --> next
-    r -->|ok| keep["save + log"]
+    ai["AI request"] --> res{"result?"}
+    res -->|"429 / 5xx"| wait["wait 4 → 8 → 16 s<br/>(or the server retryDelay)"] --> ai
+    res -->|"server says retry in 20 h<br/>(daily quota)"| fb["next model in the chain<br/>(TTS fallbacks)"]
+    res -->|"200 but audio too long<br/>for its words"| rej["reject take, log it,<br/>try next model"] --> fb
+    res -->|ok| save["save + log"]
 ```
 Details: [ARCHITECTURE.md](ARCHITECTURE.md).
 
