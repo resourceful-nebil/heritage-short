@@ -1,0 +1,11 @@
+# secrets: never commit
+.env
+kaggle.json
+
+# python
+__pycache__/
+.venv/
+*.pyc
+
+# video files are large; final films are published via links. Images, audio and logs stay in git.
+outputs/**/*.mp4
