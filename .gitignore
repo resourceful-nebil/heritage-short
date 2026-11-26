@@ -9,3 +9,7 @@ __pycache__/
 
 # video files are large; final films are published via links. Images, audio and logs stay in git.
 outputs/**/*.mp4
+
+# intermediate assembly files (mix, master, concat list) and the throwaway placeholder drone are rebuilt by the pipeline
+outputs/assembly/
+outputs/music/placeholder.wav

@@ -135,27 +135,59 @@ def log_call(
 
 
 class Retryable(Exception):
-    """Raised for failures worth retrying (rate limit, server error, timeout)."""
+    """Raised for failures worth retrying (rate limit, server error, timeout).
+
+    `wait` is the delay the server asked for (e.g. Gemini's retryDelay on a 429), if any.
+    """
+
+    def __init__(self, message: str, wait: float | None = None):
+        super().__init__(message)
+        self.wait = wait
 
 
-def with_retries(fn: Callable[[], T], *, attempts: int = 3, base_delay: float = 4.0, label: str = "") -> T:
-    """Call fn, retrying Retryable errors with exponential backoff (4 s, 8 s, ...)."""
+class QuotaExhausted(RuntimeError):
+    """The provider's quota for today is gone; retrying now is pointless."""
+
+
+MAX_WAIT = 120.0  # seconds; longer server-requested waits mean a daily quota, not a per-minute one
+
+
+def with_retries(fn: Callable[[], T], *, attempts: int = 4, base_delay: float = 4.0, label: str = "") -> T:
+    """Call fn, retrying Retryable errors with exponential backoff (4 s, 8 s, 16 s),
+    or the server's own retry delay when it gives one (per-minute rate limits need ~30-60 s)."""
     for i in range(1, attempts + 1):
         try:
             return fn()
         except Retryable as exc:
             if i == attempts:
                 raise
-            delay = base_delay * 2 ** (i - 1)
-            print(f"  retry {i}/{attempts - 1} {label}: {exc} (waiting {delay:.0f}s)")
+            if exc.wait and exc.wait > MAX_WAIT:
+                # a daily quota says "retry in 20h": sleeping that long looks like a hang, so stop and say why
+                raise QuotaExhausted(f"{label}: server asks to wait {exc.wait / 3600:.1f} h (daily quota used up). "
+                                     f"Use another model or try tomorrow.") from exc
+            delay = max(base_delay * 2 ** (i - 1), exc.wait or 0)
+            print(f"  retry {i}/{attempts - 1} {label}: {str(exc)[:120]} (waiting {delay:.0f}s)")
             time.sleep(delay)
     raise AssertionError("unreachable")
+
+
+def _server_wait(resp: Any) -> float | None:
+    """Read how long the server wants us to wait: Retry-After header or Gemini's RetryInfo.retryDelay ("37s")."""
+    if resp.headers.get("Retry-After", "").isdigit():
+        return float(resp.headers["Retry-After"]) + 1
+    try:
+        for d in resp.json().get("error", {}).get("details", []):
+            if "retryDelay" in d:
+                return float(str(d["retryDelay"]).rstrip("s")) + 1
+    except (ValueError, AttributeError):
+        pass
+    return 30.0 if resp.status_code == 429 else None
 
 
 def check_http(resp: Any) -> None:
     """Turn an HTTP response into Retryable (429/5xx) or a hard error (other 4xx)."""
     if resp.status_code == 429 or resp.status_code >= 500:
-        raise Retryable(f"HTTP {resp.status_code}: {resp.text[:200]}")
+        raise Retryable(f"HTTP {resp.status_code}: {resp.text[:200]}", wait=_server_wait(resp))
     if resp.status_code >= 400:
         raise RuntimeError(f"HTTP {resp.status_code}: {resp.text[:500]}")
 
