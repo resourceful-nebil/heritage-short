@@ -92,6 +92,7 @@
           "image_prompt": {"type": "string", "minLength": 10, "description": "What the still shows. Style block and character text are added automatically."},
           "motion_prompt": {"type": "string", "minLength": 3, "description": "Only the motion and camera (for image-to-video)."},
           "kenburns": {"type": "string", "enum": ["in", "out", "left", "right", "up", "down"], "default": "in", "description": "Fallback pan/zoom direction when no video clip exists."},
+          "transition_in": {"type": "string", "enum": ["cut", "dip"], "default": "cut", "description": "How this shot begins: a hard cut, or a short dip to black (for a jump in time)."},
           "narration": {"type": "string", "description": "Spoken line in the narration language (may be empty for a music-only beat)."},
           "subtitle": {"type": "string", "description": "English subtitle for the line."},
           "seed": {"type": "integer"}

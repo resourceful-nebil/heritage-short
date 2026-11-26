@@ -104,6 +104,34 @@ def end_card(board: dict[str, Any], path: Path, seconds: float) -> None:
     run_ffmpeg(["-loop", "1", "-i", str(still), "-vf", f"fps={shots.FPS},fade=t=in:d=0.6,format=yuv420p", "-frames:v", str(n), "-c:v", "libx264", "-crf", "18", str(path)])
 
 
+DIP = 0.4  # seconds of fade on each side of a "dip" transition
+
+
+def with_dips(board: dict[str, Any], clips: dict[str, Path], durs: dict[str, float]) -> list[Path]:
+    """Shot clips in order; around a shot with transition_in == "dip", the previous clip fades out and this one fades in
+    (testers found the jump from the boy to the grown man too abrupt). Same lengths, so audio timing is unchanged."""
+    ids = [s["id"] for s in board["shots"]]
+    dip_into = {s["id"] for s in board["shots"] if s.get("transition_in") == "dip"}
+    out = []
+    for i, sid in enumerate(ids):
+        fade_in = sid in dip_into
+        fade_out = i + 1 < len(ids) and ids[i + 1] in dip_into
+        if not (fade_in or fade_out):
+            out.append(clips[sid])
+            continue
+        src = clips[sid]
+        dst = WORK / f"{src.stem}-dip{'i' if fade_in else ''}{'o' if fade_out else ''}.mp4"
+        if not dst.exists():
+            vf = []
+            if fade_in:
+                vf.append(f"fade=t=in:d={DIP}")
+            if fade_out:
+                vf.append(f"fade=t=out:st={durs[sid] - DIP:.3f}:d={DIP}")
+            run_ffmpeg(["-i", str(src), "-vf", ",".join(vf), "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", str(dst)])
+        out.append(dst)
+    return out
+
+
 def mix_audio(board: dict[str, Any], durs: dict[str, float], voice: dict[str, Path], total: float, out: Path, music_file: Path) -> None:
     inputs, delays, start = [], [], 0.0
     for shot in board["shots"]:
@@ -165,7 +193,7 @@ def run(mode: str = "film") -> dict[str, Path]:
         if not card.exists():
             end_card(board, card, card_s)
         listing = WORK / "concat.txt"
-        order = [clips[s["id"]] for s in board["shots"]] + [card]
+        order = with_dips(board, clips, durs) + [card]
         listing.write_text("".join(f"file '{p.resolve().as_posix()}'\n" for p in order), encoding="utf-8")
         master = WORK / "master.mp4"
         run_ffmpeg(["-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", str(master)])
