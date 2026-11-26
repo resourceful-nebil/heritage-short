@@ -64,5 +64,57 @@ Each entry: what I believed, what I changed, what happened (numbers from `runs.j
 
 - **Decision:** seed 11. Steadiest by far and the only one that covers the full 78.7 s film (22 and 33 go silent during
   the end card). Seed 33 leaves the most room for the voice, but it swells twice as much, and the ducking would have
-  to work harder. _Listening check with the narration on top: pending (me)._
+  to work harder. Listening check with the narration on top: done by me, it sits under the voice; all 3 testers in
+  test 2 said the music helps (DESIGN.md).
 - **Learned:** all three fade out at 77–80 s even when asked for 85 s, so ask for ~10 s more than needed.
+
+## E7: How much can a TTS prompt say? (three prompt shapes)
+- **Hypothesis:** a more detailed voice direction gives a better read.
+- **Change → result** (same line s01; checked by transcribing the audio with Gemini):
+
+  | prompt shape | model | result |
+  |---|---|---|
+  | `"<one-line style>:\n<text>"` (v1) | 3.8 Flash TTS | read the line faithfully, all 10 lines (radio cut) |
+  | same, long Fable style (≈40 words) | 3.1 Flash TTS | read the line, then **invented 5 sentences** (31 s for 10 words) |
+  | strict block ("read exactly… stop…" + `<<< >>>` markers) | 3.8 Flash TTS | **read my English instructions aloud**, no Arabic at all |
+
+- **Decision:** the opposite of my hypothesis. With TTS, anything in the prompt may be spoken, so the direction stays
+  one short line. Detail goes into the *text* (diacritics, punctuation for pauses), not the instructions.
+
+## E8: Is "too long for its words" a good detector of bad takes?
+- **Hypothesis:** a faithful Arabic reading takes ≤ 0.9 s per word + 3 s; anything longer has extra speech.
+- **Data:** the 10 accepted lines run 3.3–7.9 s for 6–11 words (0.5–0.8 s/word). The rejected takes were 23–655 s.
+- **Result:** caught **all 6** bad takes in the run. One borderline rejection (3.8 Flash-Lite, s01: 12.4 s vs a 12.0 s
+  limit) was probably a good take, a likely false positive.
+- **Decision:** keep it as a cheap first gate (no extra API call). It can't catch a take of the *right* length with
+  wrong words; the next step would be transcribing each take and comparing it to the script.
+
+## E9: One-pass vs two-pass loudness normalisation
+- **Hypothesis:** FFmpeg's single-pass `loudnorm` is good enough for a 78 s film.
+- **Result (measured with `ebur128` on the 9:16 export):**
+
+  | version | integrated | true peak |
+  |---|---|---|
+  | one pass, target −14 / −1 | −15.8 LUFS | −0.8 dBTP (over the ceiling) |
+  | two pass, linear, ceiling −1.5 | −14.7 LUFS | −1.1 dBTP |
+  | two pass, after removing the WAV buzz (F11) | **−14.1 LUFS** | **−1.2 dBTP** |
+
+- **Learned:** the brief's tip was right (two-pass is more accurate), and the last row taught me more: the 0 dBFS buzz
+  from F11 was the loudest thing in the mix, so it had been limiting how loud everything else could go.
+
+## E10: Opening on the boy, and a dip before the jump in time (from user test 2)
+- **Hypothesis:** viewers on a feed stay if the first frame has a person in it; a fade to black makes the jump from
+  boy to man feel deliberate instead of abrupt.
+- **Change:** s01 redrawn as the boy at the window looking over Riyadh (same narration); new storyboard field
+  `transition_in: "dip"` on s09 (0.4 s fade out and in; shot lengths unchanged so the audio doesn't move).
+- **Result:** builds cleanly; the first frame now shows the main character, the city and the TV in one image.
+  _Not yet tested with viewers_; that would be the first question of a third test.
+
+## E11: Does the cache really make the film reproducible? (clean clone, no keys)
+- **Hypothesis:** with every generated asset committed and named by its input hash, a stranger can rebuild the film
+  without API keys and without spending any quota.
+- **Test:** fresh `git clone` from GitHub into an empty folder, **no `.env`**, then `uv sync` + `python -m pipeline film`.
+- **Result:** the same 77.9 s film in both aspect ratios in **47 s**; `runs.jsonl` gained **11 lines, all FFmpeg**
+  (10 Ken Burns renders + 1 assembly) and **zero model calls**.
+- **Side finding:** after the F11 repair each voice line got 0.16 s shorter, so 4 shots' durations changed and only
+  those 4 Ken Burns clips re-rendered: duration is part of the clip's cache key, as it should be.
