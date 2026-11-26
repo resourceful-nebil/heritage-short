@@ -9,7 +9,7 @@ in, the finished film out (9:16 and 16:9), using free AI models only.
 
 **Watch:** [vertical 9:16](https://drive.google.com/file/d/13RIx554GZ6rWLNbxukILUClSHbLYkZYg/view?usp=sharing) ·
 [horizontal 16:9](https://drive.google.com/file/d/1Jj3ecnnuerfIo5-OJoSrlDh2KbB8WAuN/view?usp=sharing) ·
-[report](REPORT.md)
+[report](REPORT.md) · [public post (YouTube Short, AI label on)](https://youtube.com/shorts/07Ya2xHqOP0)
 
 ## Run it (one command)
 ```
