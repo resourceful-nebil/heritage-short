@@ -1,0 +1,26 @@
+{
+  "mode": "radio",
+  "total_s": 78.66,
+  "durations": {
+    "s01": 8.95,
+    "s02": 8.1,
+    "s03": 6.69,
+    "s04": 6.0,
+    "s05": 8.03,
+    "s06": 7.0,
+    "s07": 8.89,
+    "s08": 7.0,
+    "s09": 6.0,
+    "s10": 8.0
+  },
+  "real_score": false,
+  "music": "placeholder.wav",
+  "picture": [
+    "radio"
+  ],
+  "shot_sources": [],
+  "exports": {
+    "9x16": "outputs\\final\\radio_9x16.mp4",
+    "16x9": "outputs\\final\\radio_16x9.mp4"
+  }
+}
