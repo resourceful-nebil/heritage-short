@@ -34,3 +34,24 @@ What broke, what I tried, what fixed it. Newest at the bottom.
 - **What broke:** first keyframe call returned `HTTP 400: Additional or unevaluated properties '/seed' not allowed`.
 - **Fixed:** the seed is only sent to models that accept it. Consequence: schnell images can't be reproduced from a seed,
   which is one reason to compare it with `flux-2-klein-4b` (accepts a seed), see EXPERIMENTS.md E2.
+
+## F6: The voice model invented my memories, then read my instructions aloud
+- **What broke:** after swapping in a rewritten script, the film came out at **176 s** instead of ~80 s. Line s01 (10 words)
+  was 31 s long. I asked Gemini to transcribe it: the first 7 s were my line, then `gemini-3.1-flash-tts-preview` kept
+  talking and **invented sentences** ("I moved to my birthplace when I was young… when I turned 10…"). In a heritage film,
+  a model putting false memories in my mouth is worse than a crash.
+- **Tried 1:** a strict prompt ("Read the text between the markers exactly… Voice direction: …"). Worse: the transcript
+  of the next take was **my English instructions read aloud**, and no Arabic at all. One take was 655 s long.
+- **Tried 2 / fixed:**
+  1. Back to the short form `"<one-line direction>:\n<text>"`. Anything in a TTS prompt may be spoken, so it stays tiny.
+  2. **A length check in the pipeline:** a take longer than `0.9 s × words + 3 s` is renamed `*-rejected.wav`, logged
+     as `rejected` in runs.jsonl, and the next model in the chain is tried. It caught 6 bad takes automatically.
+  3. **A model fallback chain** (`GEMINI_TTS_MODEL` + `GEMINI_TTS_FALLBACKS`), because the free quota is per model.
+- **Where it ended:** all free TTS quotas for today were used up by the retries. The film uses the **v1 lines** from
+  `gemini-3.8-flash-tts` that I had already checked in the radio cut (all served from cache, no new calls).
+  The better v2 script is saved in `docs/narration-v2.md` and goes in when quota allows: only the voice lines regenerate.
+- **Lessons:** (1) check outputs, not just status codes: every bad take returned HTTP 200. (2) A model can fail by
+  *adding* content, so a heritage pipeline needs a check that the audio matches the text. Next step: transcribe each
+  take and compare it to the script automatically.
+- **Open question:** Gemini said "retry in 19.5 h" for 3.1, yet a call worked four minutes later. The server's retry
+  hint is not fully reliable, so the code treats it as a hint for when to give up, not as a schedule.

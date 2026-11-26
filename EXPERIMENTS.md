@@ -23,10 +23,29 @@ Each entry: what I believed, what I changed, what happened (numbers from `runs.j
   | prompt following | TV on a rooftop (odd), planes | painted fake Arabic letters on the sky, extra people |
   | boy (s04) | clearly Ethiopian, abstract TV light | lighter skin, generic cartoon kids on the TV |
 
-- **Decision:** _pending, chosen with the director (me)._ Either way the prompts need: "no writing", a stronger skin-tone
-  description, and "the TV shows only abstract coloured light".
+- **Decision:** klein-4b, because it looks like a painted memory and is reproducible (seed). Its problems are fixed in
+  the prompts: FLUX has no negative prompt, so "no writing, no letters, no signs" went *into* the style block, the skin tone
+  is described explicitly ("Ethiopian Habesha, deep dark brown skin"), and the TV "shows only soft abstract swirls of light".
+- **Result after the fix (all 10 shots):** same boy in every shot, right skin tone, no fake letters, no copyrighted
+  characters on the TV. Two shots needed another pass (E4).
 
 ## E3: Gemini TTS model for Arabic narration
 - **Context:** forced by F4 (daily quota). Lines s01–s08 exist from gemini-2.5-flash-preview-tts and all ten from
   gemini-3.8-flash-tts, same voice (Charon) and style prompt, so the same line can be compared.
-- **Result:** _to fill after listening: pronunciation of الأمهرية, الإنجيرا, البربري; pace; warmth._
+- **Result:** gemini-3.8-flash-tts read every line faithfully (radio cut 78.7 s). gemini-3.1-flash-tts-preview added
+  invented sentences (F6). 3.8-flash-tts is the primary model; the others are fallbacks behind the length check.
+
+## E4: Fixing two keyframes by changing only their prompts (cache in action)
+- **s03:** the room had two TVs. Adding "a single television, only one television in the room" fixed it in one try.
+- **s07:** "two Saudi boys in white thobes" came out as East Asian-looking boys, twice (once as three boys). Describing
+  skin tone alone didn't help. Describing **dress** (red-and-white shemagh) plus a new seed (207) made them read as Saudi.
+  Faces are still somewhat generic: an honest limit of the model's bias, noted in ETHICS.md.
+- **Cache check:** after the s07 change, `film` re-rendered **only s07** (8.9 s); every other stage was a cache hit.
+
+## E5: Rewriting the narration with a stronger writer (Claude Fable)
+- **Hypothesis:** the v1 lines state facts; lines that name what is on screen and call back at the end will land harder.
+- **Change:** asked Claude Fable for a rewrite under strict rules (true facts only, 4–14 words a line, full diacritics,
+  keep the slogan, no cartoon names). Key ideas: the TV glow on the boy's face returns on the man's face at 25; the
+  "new planet" returns as the last words ("my own planet"); the ending speaks to the viewer ("this cartoon you're
+  watching? I made it myself, with AI").
+- **Result:** a better script (`docs/narration-v2.md`), but recording it hit F6 and the daily quotas. Not in the film yet.
