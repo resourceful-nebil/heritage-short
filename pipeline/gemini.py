@@ -50,6 +50,9 @@ def generate_text(prompt: str, *, model: str, json_mode: bool = False, temperatu
 
 def tts(text: str, *, model: str, voice: str, style: str, out: Path) -> tuple[float, dict[str, Any]]:
     """Speak `text` with a prebuilt voice and a plain-language style instruction; writes a 24 kHz mono WAV."""
+    # Keep the prompt to "<one short direction>: <text>". A long instruction block was read aloud word for word
+    # instead of the Arabic (FAILURES.md F6); anything in the prompt may be spoken. narration.py rejects takes that
+    # are far longer than the text, which catches both read-aloud instructions and invented sentences.
     prompt = f"{style}:\n{text}" if style else text
     body = {
         "contents": [{"parts": [{"text": prompt}]}],

@@ -13,3 +13,5 @@ outputs/**/*.mp4
 # intermediate assembly files (mix, master, concat list) and the throwaway placeholder drone are rebuilt by the pipeline
 outputs/assembly/
 outputs/music/placeholder.wav
+# narration takes rejected by the length check (evidence is in runs.jsonl)
+outputs/narration/*-rejected.wav
