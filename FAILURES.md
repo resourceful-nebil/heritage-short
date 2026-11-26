@@ -61,3 +61,11 @@ What broke, what I tried, what fixed it. Newest at the bottom.
   the longer lines ("Images, voice and music made with AI") were cut at both edges. Spotted by me watching the film on my phone.
 - **Fixed:** the card now wraps words to fit the 9:16 safe width (85% of the middle strip) and was re-rendered.
   Lesson: anything placed on the square master must be designed for the narrowest crop.
+
+## F8: ACE-Step crashed on Kaggle before making a sound (matplotlib backend)
+- **What broke:** install and model download worked on the T4, then importing ACE-Step failed:
+  `ValueError: Key backend: 'module://matplotlib_inline.backend_inline' is not a valid value for backend`.
+- **Why:** Kaggle sets the environment variable `MPLBACKEND` to its notebook plotting backend. Our script runs in ACE-Step's own
+  uv environment, whose matplotlib doesn't have that backend, and ACE-Step imports matplotlib indirectly (training code via lightning).
+- **Fixed:** run the script with `MPLBACKEND=Agg` (a plain backend that needs no display). Lesson: a separate environment still
+  inherits the parent's environment variables.
