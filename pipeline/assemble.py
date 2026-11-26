@@ -69,16 +69,35 @@ def end_card(board: dict[str, Any], path: Path, seconds: float) -> None:
 
     img = Image.new("RGB", (shots.SIZE, shots.SIZE), (8, 8, 8))
     draw = ImageDraw.Draw(img)
-    try:
-        font = ImageFont.truetype("arial.ttf", 40)
-    except OSError:
-        font = ImageFont.load_default(size=40)
-    lines = board["end_card"]["lines"]
-    y = shots.SIZE // 2 - len(lines) * 30
-    for line in lines:
-        w = draw.textlength(line, font=font)
-        draw.text(((shots.SIZE - w) / 2, y), line, fill=(235, 235, 235), font=font)
-        y += 60
+
+    def font_of(size: int) -> Any:
+        try:
+            return ImageFont.truetype("arial.ttf", size)
+        except OSError:
+            return ImageFont.load_default(size=size)
+
+    # The 9:16 export keeps only the middle 56% of the square master (1080 of 1920 px), so the text must fit inside
+    # `safe` px of the 1024 square or it gets cut (it did: FAILURES.md F7). Wrap by words; first line is the title.
+    safe = int(shots.SIZE * 1080 / 1920 * 0.85)
+    size = 40
+    lines: list[tuple[str, Any]] = []
+    for i, text in enumerate(board["end_card"]["lines"]):
+        f = font_of(52 if i == 0 else size)
+        row = ""
+        for word in text.split():
+            trial = f"{row} {word}".strip()
+            if draw.textlength(trial, font=f) <= safe or not row:
+                row = trial
+            else:
+                lines.append((row, f))
+                row = word
+        lines.append((row, f))
+    step = 64
+    y = shots.SIZE // 2 - len(lines) * step // 2
+    for text, f in lines:
+        w = draw.textlength(text, font=f)
+        draw.text(((shots.SIZE - w) / 2, y), text, fill=(235, 235, 235), font=f)
+        y += step
     still = path.with_suffix(".png")
     img.save(still)
     n = round(seconds * shots.FPS)
@@ -122,7 +141,7 @@ def run(mode: str = "film") -> dict[str, Path]:
         picture = ["radio"]
     else:
         clips = shots.run(durs)
-        card = WORK / f"endcard-{key('card-v1', board['end_card'])}.mp4"
+        card = WORK / f"endcard-{key('card-v3', board['end_card'])}.mp4"
         if not card.exists():
             end_card(board, card, card_s)
         listing = WORK / "concat.txt"

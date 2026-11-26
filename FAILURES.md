@@ -55,3 +55,9 @@ What broke, what I tried, what fixed it. Newest at the bottom.
   take and compare it to the script automatically.
 - **Open question:** Gemini said "retry in 19.5 h" for 3.1, yet a call worked four minutes later. The server's retry
   hint is not fully reliable, so the code treats it as a hint for when to give up, not as a schedule.
+
+## F7: The end card was cut off in the vertical export
+- **What broke:** the end card is drawn on the square master; the 9:16 export keeps only the middle 1080 of 1920 px, so
+  the longer lines ("Images, voice and music made with AI") were cut at both edges. Spotted by me watching the film on my phone.
+- **Fixed:** the card now wraps words to fit the 9:16 safe width (85% of the middle strip) and was re-rendered.
+  Lesson: anything placed on the square master must be designed for the narrowest crop.
