@@ -6,7 +6,9 @@
     python -m pipeline narration [s03 ...]   Gemini TTS, one WAV per shot (cached)
     python -m pipeline refsheet              candidate character looks (seeds 1-4)
     python -m pipeline keyframes [s03 ...]   FLUX keyframes (cached)
-    python -m pipeline radio                 narration + music over black (the cheap prototype)
+    python -m pipeline music import <zip>    unpack + log the Kaggle ACE-Step candidates
+    python -m pipeline music choose seed22   make one candidate the score
+    python -m pipeline radio                narration + music over black (the cheap prototype)
     python -m pipeline film                  everything: narration, keyframes, shots, music, assembly
     python -m pipeline costs                 summarise runs.jsonl into a per-stage table
 
@@ -57,6 +59,15 @@ def main(argv: list[str]) -> None:
         if cmd == "film":
             keyframes.run()
         assemble.run(cmd)
+    elif cmd == "music":
+        from pipeline import music
+
+        if len(rest) == 2 and rest[0] == "import":
+            music.import_candidates(rest[1])
+        elif len(rest) == 2 and rest[0] == "choose":
+            music.choose(rest[1])
+        else:
+            sys.exit("usage: python -m pipeline music import <score_candidates.zip> | music choose <seed22>")
     elif cmd == "costs":
         from pipeline import costs
 
