@@ -59,7 +59,7 @@ flowchart TD
 
     K["1 · keyframes<br/>FLUX.2 klein on Cloudflare<br/>shot prompt + character + style block"] --> KF[("outputs/keyframes<br/>s01…s10 .jpg")]
     KF --> S["2 · shots<br/>FFmpeg Ken Burns pan/zoom<br/>(uses a Wan clip if one exists)"] --> SH[("outputs/shots")]
-    N["3 · narration<br/>Gemini TTS, voice 'Charon'<br/>fallback chain + length check"] --> NA[("outputs/narration<br/>one WAV per line")]
+    N["3 · narration<br/>Gemini TTS, voice Charon<br/>fallback chain + length check"] --> NA[("outputs/narration<br/>one WAV per line")]
     M["4 · music<br/>ACE-Step 1.5 on a Kaggle T4<br/>3 seeds → measured → chosen"] --> MU[("outputs/music/score.wav")]
 
     SH & NA & MU --> A["5 · assemble (FFmpeg)<br/>place voice · duck music · two-pass loudness −14 LUFS<br/>subtitles · dip to black · AI end card"]
@@ -83,8 +83,8 @@ flowchart LR
 ```mermaid
 flowchart LR
     call["AI call"] --> r{"result?"}
-    r -->|"429 / 5xx"| w["wait 4 → 8 → 16 s<br/>(or the server's retryDelay)"] --> call
-    r -->|"'retry in 20 h'<br/>(daily quota)"| next["next model in the chain<br/>(TTS fallbacks)"]
+    r -->|"429 / 5xx"| w["wait 4 → 8 → 16 s<br/>(or the server retryDelay)"] --> call
+    r -->|"server says retry in 20 h<br/>(daily quota)"| next["next model in the chain<br/>(TTS fallbacks)"]
     r -->|"200 but audio too long<br/>for its words"| rej["reject take, log it,<br/>try next model"] --> next
     r -->|ok| keep["save + log"]
 ```
