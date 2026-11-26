@@ -46,15 +46,47 @@ Kaggle T4 GPU (ACE-Step 1.5 music, ~26 s of generation). The real limit is quota
 ~10 requests per model per day, which shaped the design. Measured numbers in [COSTS.md](COSTS.md).
 
 ## How it works
+
+### 1. One contract, five stages
+```mermaid
+flowchart TD
+    story["story.md<br/>my memories, in my words"] -->|"draft (Gemini 2.5 Flash)<br/>then I rewrite it by hand"| sb
+    sb["storyboard.json · THE CONTRACT<br/>10 shots: reason, picture prompt, Arabic line,<br/>English subtitle, seed, motion, transition"]
+    schema{{"schema check<br/>storyboard.schema.json"}}
+    sb --> schema
+    schema -->|"invalid: stop before any AI call"| stop(["error, nothing generated"])
+    schema -->|valid| K & N & M
+
+    K["1 · keyframes<br/>FLUX.2 klein on Cloudflare<br/>shot prompt + character + style block"] --> KF[("outputs/keyframes<br/>s01…s10 .jpg")]
+    KF --> S["2 · shots<br/>FFmpeg Ken Burns pan/zoom<br/>(uses a Wan clip if one exists)"] --> SH[("outputs/shots")]
+    N["3 · narration<br/>Gemini TTS, voice 'Charon'<br/>fallback chain + length check"] --> NA[("outputs/narration<br/>one WAV per line")]
+    M["4 · music<br/>ACE-Step 1.5 on a Kaggle T4<br/>3 seeds → measured → chosen"] --> MU[("outputs/music/score.wav")]
+
+    SH & NA & MU --> A["5 · assemble (FFmpeg)<br/>place voice · duck music · two-pass loudness −14 LUFS<br/>subtitles · dip to black · AI end card"]
+    A --> F1["film_9x16.mp4"] & F2["film_16x9.mp4"]
+
+    K & N & M & S & A -.->|"one line per call:<br/>model, params, seed, latency, status"| LOG[("runs.jsonl")]
 ```
-story.md ──draft──▶ storyboard.json  (the contract: 10 shots, each with a reason, prompts, Arabic line, subtitle)
-                         │
-     ┌──────────┬────────┼───────────┬──────────────┐
-  keyframes   shots   narration     music         assemble
-  FLUX.2      Ken     Gemini TTS    ACE-Step 1.5  FFmpeg: voice placement, ducking, two-pass loudness
-  klein 4B    Burns   (fallback     (Kaggle T4,   (-14 LUFS), subtitles, dip-to-black, AI end card,
-  (seeded)    pan/    chain +       3 seeds,      9:16 + 16:9
-              zoom    length check) chosen)
+
+### 2. How the cache decides what to regenerate
+Every output file is named after a **fingerprint (hash) of everything that made it**. Change one word in one shot,
+and only that shot's fingerprint changes, so only that shot is made again.
+```mermaid
+flowchart LR
+    I["inputs of one output<br/>e.g. s06: prompt + character + style<br/>+ model + seed + steps"] --> H["sha256 → 12-char fingerprint<br/>s06-48d44d0390c6.jpg"]
+    H --> Q{"file already<br/>in outputs/?"}
+    Q -->|yes| C["cache hit:<br/>reuse it, no AI call, no quota"]
+    Q -->|no| G["generate it,<br/>save under that name,<br/>log the call in runs.jsonl"]
+```
+
+### 3. When a model fails
+```mermaid
+flowchart LR
+    call["AI call"] --> r{"result?"}
+    r -->|"429 / 5xx"| w["wait 4 → 8 → 16 s<br/>(or the server's retryDelay)"] --> call
+    r -->|"'retry in 20 h'<br/>(daily quota)"| next["next model in the chain<br/>(TTS fallbacks)"]
+    r -->|"200 but audio too long<br/>for its words"| rej["reject take, log it,<br/>try next model"] --> next
+    r -->|ok| keep["save + log"]
 ```
 Details: [ARCHITECTURE.md](ARCHITECTURE.md).
 
