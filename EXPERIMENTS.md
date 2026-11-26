@@ -49,3 +49,20 @@ Each entry: what I believed, what I changed, what happened (numbers from `runs.j
   "new planet" returns as the last words ("my own planet"); the ending speaks to the viewer ("this cartoon you're
   watching? I made it myself, with AI").
 - **Result:** a better script (`docs/narration-v2.md`), but recording it hit F6 and the daily quotas. Not in the film yet.
+
+## E6: Choosing the score by measuring, not only by ear
+- **Setup:** ACE-Step 1.5 turbo, one caption, 3 fixed seeds (11, 22, 33), 85 s each, A minor, 80 bpm, instrumental.
+- **Hypothesis:** a score under narration should (a) leave the speech band (300–3400 Hz) as free as possible,
+  (b) be steady (no swells fighting the voice), (c) last the whole film.
+- **Measured** (ffmpeg `ebur128`, band-pass energy, `silencedetect`):
+
+  | seed | LUFS | loudness range | energy in speech band | music until |
+  |---|---|---|---|---|
+  | 11 | −15.7 | **5.1 LU** | 25% | **80.0 s** |
+  | 22 | −15.2 | 6.6 LU | 27% | 76.6 s |
+  | 33 | −14.9 | 10.3 LU | **19%** | 77.9 s |
+
+- **Decision:** seed 11. Steadiest by far and the only one that covers the full 78.7 s film (22 and 33 go silent during
+  the end card). Seed 33 leaves the most room for the voice, but it swells twice as much, and the ducking would have
+  to work harder. Confirmed by listening with the narration on top.
+- **Learned:** all three fade out at 77–80 s even when asked for 85 s, so ask for ~10 s more than needed.

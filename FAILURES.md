@@ -69,3 +69,20 @@ What broke, what I tried, what fixed it. Newest at the bottom.
   uv environment, whose matplotlib doesn't have that backend, and ACE-Step imports matplotlib indirectly (training code via lightning).
 - **Fixed:** run the script with `MPLBACKEND=Agg` (a plain backend that needs no display). Lesson: a separate environment still
   inherits the parent's environment variables.
+- **After the fix:** 3 candidates in 10.9 + 7.7 + 7.7 s of GPU time (model load 14 s). ACE-Step detected the pre-Ampere T4 by
+  itself and used float16 instead of bfloat16, so the problem I expected (no bf16 on T4) never happened.
+
+## F9: The music was made, then lost (Kaggle draft session ended)
+- **What broke:** the three tracks were generated, but by the time I went to download them the notebook said
+  "Draft Session off" and `/kaggle/working` was empty.
+- **Why:** files in a draft session are temporary; they are deleted when the session stops (idle timeout).
+- **Fixed:** re-ran it as a committed version (**Save Version → Save & Run All**). A committed run keeps its outputs
+  permanently and is a reproducible record anyone can open. Lesson: anything I need to keep comes from a committed run.
+
+## F10: One-pass loudness normalisation missed the target
+- **What broke:** first cut with the real score measured **−15.8 LUFS, true peak −0.8 dBTP** (target −14 LUFS, peak ≤ −1).
+- **Why:** single-pass `loudnorm` adjusts gain on the fly from a short window, so on a short film that starts quiet it
+  undershoots; then the AAC encoder adds a little to the peak.
+- **Fixed:** two passes: measure the whole mix first, then apply one linear gain from the measured values, with a
+  −1.5 dBTP ceiling to leave room for AAC. Result: **−14.7 LUFS, −1.1 dBTP** in both exports (the peak limit stops it
+  going louder; within 1 LU of the target).
