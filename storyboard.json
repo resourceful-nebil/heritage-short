@@ -1,0 +1,125 @@
+{
+  "title": "Youth of the Future / شباب المستقبل",
+  "logline": "An Ethiopian boy born in Riyadh in 2001 learns Arabic from the opening songs of Spacetoon cartoons, and grows up to make a cartoon of his own.",
+  "audience": "People who grew up in the Gulf and Arab world in the 2000s (the Spacetoon generation), especially children of migrant families who learned Arabic from TV.",
+  "intent": "Warm nostalgia first, then quiet pride: two homes, one childhood, and the promise of 'the youth of the future' coming true.",
+  "language": { "narration": "ar-SA", "subtitles": "en" },
+  "style": {
+    "block": "warm soft 2D storybook illustration, gouache texture, gentle brushstrokes, warm lamp light at home, cool blue TV glow, nostalgic early-2000s Riyadh apartment, consistent character design",
+    "negative": "photorealistic, 3D render, text, letters, logos, brand names, existing cartoon characters, distorted hands, extra limbs, harsh lighting"
+  },
+  "characters": [
+    { "id": "boy", "description": "an anonymous 8-year-old Ethiopian boy, warm brown skin, short dark curly hair, round face, striped red and white t-shirt, blue shorts" },
+    { "id": "young_man", "description": "the same boy grown up, an anonymous 25-year-old Ethiopian man, warm brown skin, short dark curly hair, short beard, plain dark blue hoodie" },
+    { "id": "mother_hands", "description": "only the hands of an Ethiopian mother, warm brown skin, a thin gold bracelet, white cotton sleeve with a woven coloured border, no face shown" },
+    { "id": "father_silhouette", "description": "only the dark silhouette of a father standing in a lit doorway, tall, carrying a work bag, no face visible" }
+  ],
+  "voice": { "name": "Charon", "style": "Speak in a warm, slow, gentle, nostalgic tone, like a young man remembering his childhood" },
+  "music": {
+    "caption": "gentle nostalgic instrumental, soft oud and warm synth pads, light hand percussion, a simple playful music-box motif, slow, no vocals, no strong lead under the voice",
+    "bpm": 80,
+    "seed": 42,
+    "cues": [
+      { "at_shot": "s01", "does": "enters softly, warm and quiet" },
+      { "at_shot": "s04", "does": "the music-box motif appears, a little wonder" },
+      { "at_shot": "s08", "does": "drops back to warm pads for the evening" },
+      { "at_shot": "s09", "does": "the motif returns, fuller, and resolves at the end" }
+    ]
+  },
+  "shots": [
+    {
+      "id": "s01", "duration": 7, "shot_size": "extreme_wide", "characters": [],
+      "reason": "Establish where and when: Riyadh, 2001, a city that is home but not the parents' country.",
+      "image_prompt": "Riyadh apartment rooftops at dusk in the early 2000s, many satellite dishes on the roofs, a minaret in the distance, orange and purple sky, warm lights in the windows",
+      "motion_prompt": "slow push in over the rooftops",
+      "kenburns": "in", "seed": 101,
+      "narration": "وُلدتُ في الرياض، سنة ألفين وواحد، بعيدًا عن بلد أبي وأمي.",
+      "subtitle": "I was born in Riyadh in 2001, far from my parents' country."
+    },
+    {
+      "id": "s02", "duration": 7, "shot_size": "insert", "characters": ["mother_hands"],
+      "reason": "The Ethiopian home through its strongest sense: food and smell.",
+      "image_prompt": "close view of the mother's hands pouring batter in a spiral onto a large round clay griddle to make injera, steam rising, a small bowl of red berbere spice and a pot of shiro beside it, warm kitchen light",
+      "motion_prompt": "steam rises slowly, the hand moves in a circle",
+      "kenburns": "left", "seed": 102,
+      "narration": "في البيت كنا نتكلم الأمهرية، ورائحة الإنجيرا والبربري تملأ المكان.",
+      "subtitle": "At home we spoke Amharic, and the smell of injera and berbere filled the air."
+    },
+    {
+      "id": "s03", "duration": 6, "shot_size": "wide", "characters": ["boy"],
+      "reason": "The daily ritual starts: school is over and the boy runs to the TV.",
+      "image_prompt": "the boy running into a cosy Riyadh living room with floor cushions and a patterned carpet, dropping his school backpack, reaching for an old boxy CRT television on a low wooden stand",
+      "motion_prompt": "the boy runs in from the left, camera follows gently",
+      "kenburns": "right", "seed": 103,
+      "narration": "بعد المدرسة، كنت أركض إلى الصالة، وأشغّل التلفاز.",
+      "subtitle": "After school, I ran to the salon and turned on the TV."
+    },
+    {
+      "id": "s04", "duration": 6, "shot_size": "close", "characters": ["boy"],
+      "reason": "The slogan the whole film hangs on, heard through a child's face.",
+      "image_prompt": "close view of the boy's face lit by cool blue and colourful light from a television, eyes wide with wonder, small smile, dark room behind him",
+      "motion_prompt": "the TV light flickers softly on his face, slow push in",
+      "kenburns": "in", "seed": 104,
+      "narration": "سبيستون… قناة شباب المستقبل.",
+      "subtitle": "Spacetoon... the channel of the youth of the future."
+    },
+    {
+      "id": "s05", "duration": 7, "shot_size": "wide", "characters": ["boy"],
+      "reason": "The child's imagination: each cartoon felt like visiting another world.",
+      "image_prompt": "the boy sitting on a floor cushion in front of the glowing TV while simple glowing invented planets of different colours float around the living room above him, stars and soft light, dreamlike",
+      "motion_prompt": "planets drift and rotate slowly around the room",
+      "kenburns": "up", "seed": 105,
+      "narration": "كل رسوم متحركة كانت كوكبًا جديدًا، وكنت أسافر إليها وحدي.",
+      "subtitle": "Every cartoon was a new planet, and I travelled there alone."
+    },
+    {
+      "id": "s06", "duration": 7, "shot_size": "medium", "characters": ["boy"],
+      "reason": "The heart of the story: how he really learned Arabic.",
+      "image_prompt": "the boy standing in front of the TV singing happily with his arms open, mouth wide open in song, colourful light from the screen, the living room around him",
+      "motion_prompt": "the boy sways and sings, light pulses with the music",
+      "kenburns": "out", "seed": 106,
+      "narration": "حفظتُ العربية من الشارات، أغنيةً بعد أغنية.",
+      "subtitle": "I learned Arabic from the opening songs, one song after another."
+    },
+    {
+      "id": "s07", "duration": 7, "shot_size": "medium", "characters": ["boy"],
+      "reason": "The outside world: Saudi friends, Saudi food, the same songs.",
+      "image_prompt": "the boy sitting on a carpet with two Saudi boys in white thobes, sharing a large round tray of kabsa rice with chicken and a plate of dates, laughing together, warm afternoon light",
+      "motion_prompt": "the boys laugh and reach for the food",
+      "kenburns": "left", "seed": 107,
+      "narration": "وفي الخارج، أكلنا الكبسة مع أصدقائي، وغنّينا الشارات نفسها.",
+      "subtitle": "Outside, my friends and I shared kabsa and sang the same songs."
+    },
+    {
+      "id": "s08", "duration": 7, "shot_size": "wide", "characters": ["boy", "father_silhouette"],
+      "reason": "The warmth of home: the whole day leads to dad coming home.",
+      "image_prompt": "evening in the living room, warm lamp light, a round tray of injera on a low table, the boy turning his head with a happy face toward the front door as it opens and the father's dark silhouette stands in the bright doorway",
+      "motion_prompt": "the door opens slowly, light spills into the room",
+      "kenburns": "right", "seed": 108,
+      "narration": "وفي المساء، كنا ننتظر صوت مفتاح أبي في الباب.",
+      "subtitle": "And every evening, we waited for the sound of Dad's key in the door."
+    },
+    {
+      "id": "s09", "duration": 6, "shot_size": "medium_close", "characters": ["young_man"],
+      "reason": "The jump to today: same glow on the face, a different screen.",
+      "image_prompt": "the young man sitting at a desk at night, his face lit by the cool blue glow of a laptop screen, the same expression of wonder as the boy, a small modern room",
+      "motion_prompt": "slow push in on his face, screen light flickers",
+      "kenburns": "in", "seed": 109,
+      "narration": "قالوا عنّا: شباب المستقبل.",
+      "subtitle": "They called us the youth of the future."
+    },
+    {
+      "id": "s10", "duration": 8, "shot_size": "medium", "characters": ["young_man", "boy"],
+      "reason": "The promise kept: the boy he was now lives inside the cartoon he made.",
+      "image_prompt": "over-the-shoulder view of the young man at his laptop, on the laptop screen a small illustrated picture of the boy singing in front of an old TV, warm light from a lamp, glowing invented planets reflected on the window",
+      "motion_prompt": "slow pull back from the laptop screen",
+      "kenburns": "out", "seed": 110,
+      "narration": "وكانوا على حق. اليوم، أصنع الرسوم المتحركة بنفسي.",
+      "subtitle": "They were right. Today, I make the cartoons myself."
+    }
+  ],
+  "end_card": {
+    "lines": ["Youth of the Future", "Images, voice and music made with AI", "A true story from my childhood in Riyadh"],
+    "duration": 4
+  }
+}
