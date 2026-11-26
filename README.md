@@ -16,7 +16,11 @@ Output: `outputs/final/film_9x16.mp4` and `outputs/final/film_16x9.mp4`.
 Everything is cached by a hash of its inputs, so a second run makes nothing new; change one shot in `storyboard.json`
 and only that shot (picture or voice) is regenerated.
 
-First time: copy `.env.example` to `.env` and add free keys (step by step in [docs/SETUP.md](docs/SETUP.md)).
+**Tested from a clean clone:** a fresh `git clone` with no `.env` rebuilds the same film in ~47 s with zero model calls,
+because every generated image, voice line and the score are committed and named by a hash of their inputs
+(EXPERIMENTS.md E11). Keys are only needed to *generate* something new.
+
+First time generating: copy `.env.example` to `.env` and add free keys (step by step in [docs/SETUP.md](docs/SETUP.md)).
 Needs Python 3.12 (via [uv](https://docs.astral.sh/uv/)) and FFmpeg. The music is made once on a free Kaggle GPU:
 [kaggle.com/code/nebilelias/heritage-short-acestep](https://www.kaggle.com/code/nebilelias/heritage-short-acestep)
 (source: [kaggle/acestep_score.ipynb](kaggle/acestep_score.ipynb)).
