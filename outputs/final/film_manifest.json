@@ -13,8 +13,8 @@
     "s09": 6.0,
     "s10": 8.0
   },
-  "real_score": false,
-  "music": "placeholder.wav",
+  "real_score": true,
+  "music": "score.wav",
   "picture": [
     "s01-b5201e7d3f04.mp4",
     "s02-79f26c31eb4b.mp4",

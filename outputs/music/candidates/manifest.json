@@ -1,0 +1,34 @@
+{
+  "model": "ACE-Step 1.5 (acestep-v15-turbo)",
+  "repo_commit": "ca1e85fe9430179831e6bc6be790c332190a3866",
+  "gpu": "Tesla T4",
+  "caption": "gentle nostalgic instrumental, soft oud and warm synth pads, light hand percussion, a simple playful music-box motif, slow, no vocals, no strong lead melody",
+  "bpm": 80,
+  "key": "A minor",
+  "duration": 85,
+  "inference_steps": 8,
+  "load_seconds": 14.2,
+  "candidates": [
+    {
+      "file": "seed11.wav",
+      "seed": 11,
+      "status": "ok",
+      "seconds": 10.9,
+      "sample_rate": 48000
+    },
+    {
+      "file": "seed22.wav",
+      "seed": 22,
+      "status": "ok",
+      "seconds": 7.7,
+      "sample_rate": 48000
+    },
+    {
+      "file": "seed33.wav",
+      "seed": 33,
+      "status": "ok",
+      "seconds": 7.7,
+      "sample_rate": 48000
+    }
+  ]
+}
