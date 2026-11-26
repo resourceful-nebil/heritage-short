@@ -15,7 +15,7 @@ import requests
 
 from pipeline.common import Retryable, cached, check_http, env, image_prompt, key, load_storyboard, log_call, out_path, with_retries
 
-DEFAULT_MODEL = "@cf/black-forest-labs/flux-1-schnell"
+DEFAULT_MODEL = "@cf/black-forest-labs/flux-2-klein-4b"  # chosen over flux-1-schnell, see EXPERIMENTS.md E2
 
 
 def _generate(prompt: str, seed: int | None, steps: int) -> tuple[bytes, float, dict[str, Any]]:
