@@ -23,7 +23,9 @@ def _generate(prompt: str, seed: int | None, steps: int) -> tuple[bytes, float, 
     url = f"https://api.cloudflare.com/client/v4/accounts/{env('CLOUDFLARE_ACCOUNT_ID')}/ai/run/{model}"
     headers = {"Authorization": f"Bearer {env('CLOUDFLARE_API_TOKEN')}"}
     params: dict[str, Any] = {"prompt": prompt[:2048], "steps": steps}
-    if seed is not None:
+    # flux-1-schnell on Workers AI rejects a seed ("Additional properties '/seed' not allowed", see FAILURES.md),
+    # so its images are not reproducible; models that accept one get it.
+    if seed is not None and "flux-1-schnell" not in model:
         params["seed"] = seed
 
     def call() -> tuple[bytes, float, dict[str, Any]]:
