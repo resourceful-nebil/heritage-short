@@ -64,5 +64,5 @@ Each entry: what I believed, what I changed, what happened (numbers from `runs.j
 
 - **Decision:** seed 11. Steadiest by far and the only one that covers the full 78.7 s film (22 and 33 go silent during
   the end card). Seed 33 leaves the most room for the voice, but it swells twice as much, and the ducking would have
-  to work harder. Confirmed by listening with the narration on top.
+  to work harder. _Listening check with the narration on top: pending (me)._
 - **Learned:** all three fade out at 77–80 s even when asked for 85 s, so ask for ~10 s more than needed.
