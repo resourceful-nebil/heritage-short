@@ -26,7 +26,7 @@
     },
     {
       "id": "father_silhouette",
-      "description": "only the dark silhouette of a father standing in a lit doorway, tall, carrying a work bag, no face visible"
+      "description": "a tall Ethiopian father with deep dark brown skin, light blue work shirt and dark trousers, his face always in soft shadow so no features are visible"
     }
   ],
   "voice": {
@@ -93,7 +93,7 @@
         "boy"
       ],
       "reason": "The daily ritual starts: school is over and the boy runs to the TV.",
-      "image_prompt": "the boy running into a cosy Riyadh living room with floor cushions and a patterned carpet, dropping his school backpack, toward a single old boxy CRT television on a low wooden stand, only one television in the room, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
+      "image_prompt": "the boy running into the room, dropping his school backpack, heading toward the television, in the same family living room every time: warm beige walls, a blue and red patterned carpet, colourful floor cushions, one old boxy CRT television on a low wooden stand, a window with white curtains, only one television in the room, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
       "motion_prompt": "the boy runs in from the left, camera follows gently",
       "kenburns": "right",
       "seed": 103,
@@ -108,10 +108,10 @@
         "boy"
       ],
       "reason": "The slogan the whole film hangs on, heard through a child's face.",
-      "image_prompt": "close view of the boy sitting on the floor facing an old boxy CRT television, his face lit by its cool blue and coloured glow, eyes wide with wonder, small smile, dark room behind him, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
+      "image_prompt": "close view of the boy in his striped red and white t-shirt sitting on the carpet facing the old CRT television, his face lit by its cool blue and coloured glow, eyes wide with wonder, small smile, in the same family living room every time: warm beige walls, a blue and red patterned carpet, colourful floor cushions, one old boxy CRT television on a low wooden stand, a window with white curtains, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
       "motion_prompt": "the TV light flickers softly on his face, slow push in",
       "kenburns": "in",
-      "seed": 104,
+      "seed": 214,
       "narration": "سبيستون… قناة شباب المستقبل.",
       "subtitle": "Spacetoon... the channel of the youth of the future."
     },
@@ -122,11 +122,11 @@
       "characters": [
         "boy"
       ],
-      "reason": "The child's imagination: each cartoon felt like visiting another world.",
-      "image_prompt": "the boy sitting on a floor cushion in front of the glowing TV while simple glowing invented planets of different colours float around the living room above him, stars and soft light, dreamlike, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
+      "reason": "The child's imagination: each cartoon felt like visiting another world (and it breaks three TV shots in a row, test 1).",
+      "image_prompt": "the boy floating happily in a deep blue starry sky among simple glowing invented planets of different colours, arms spread wide as if flying, dreamlike, soft light, no television, no room",
       "motion_prompt": "planets drift and rotate slowly around the room",
       "kenburns": "up",
-      "seed": 105,
+      "seed": 205,
       "narration": "كل رسوم متحركة كانت كوكبًا جديدًا، وكنت أسافر إليها وحدي.",
       "subtitle": "Every cartoon was a new planet, and I travelled there alone."
     },
@@ -138,7 +138,7 @@
         "boy"
       ],
       "reason": "The heart of the story: how he really learned Arabic.",
-      "image_prompt": "the boy standing in front of the TV singing happily with his arms open, mouth wide open in song, colourful light from the screen, the living room around him, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
+      "image_prompt": "the boy standing in front of the television singing happily with his arms open, mouth wide open in song, in the same family living room every time: warm beige walls, a blue and red patterned carpet, colourful floor cushions, one old boxy CRT television on a low wooden stand, a window with white curtains, the TV screen shows only soft abstract swirls of coloured light, no characters, no pictures",
       "motion_prompt": "the boy sways and sings, light pulses with the music",
       "kenburns": "out",
       "seed": 106,
@@ -168,11 +168,11 @@
         "boy",
         "father_silhouette"
       ],
-      "reason": "The warmth of home: the whole day leads to dad coming home.",
-      "image_prompt": "evening in the living room, warm lamp light, a round tray of injera on a low table, the boy turning his head with a happy face toward the front door as it opens and the father's dark silhouette stands in the bright doorway",
+      "reason": "The warmth of home: the whole day leads to Dad coming home (redrawn after test 1: he must be arriving, not leaving).",
+      "image_prompt": "evening, warm lamp light, front view of the father walking INTO the living room toward the viewer, his chest and shoulders facing us, his face in soft shadow under the lamp so no features are visible, a work bag in his hand, the front door open behind him, the boy running to hug him with open arms, a round tray of injera on a low table, in the same family living room: warm beige walls, a blue and red patterned carpet, colourful floor cushions",
       "motion_prompt": "the door opens slowly, light spills into the room",
       "kenburns": "right",
-      "seed": 108,
+      "seed": 208,
       "narration": "وفي المساء، كنا ننتظر صوت مفتاح أبي في الباب.",
       "subtitle": "And every evening, we waited for the sound of Dad's key in the door."
     },
