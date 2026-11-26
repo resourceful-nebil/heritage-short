@@ -120,8 +120,28 @@ def mix_audio(board: dict[str, Any], durs: dict[str, float], voice: dict[str, Pa
     parts.append("".join(f"[v{i}]" for i in range(m)) + f"amix=inputs={m}:normalize=0,apad,atrim=0:{total:.3f},asplit=2[voice][sc]")
     parts.append(f"[{m}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:{total:.3f},afade=t=in:d=2,afade=t=out:st={total - 3:.3f}:d=3,volume=0.55[mus]")
     parts.append("[mus][sc]sidechaincompress=threshold=0.02:ratio=6:attack=300:release=1500[ducked]")
-    parts.append("[voice][ducked]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1:LRA=11[out]")
-    run_ffmpeg([*args, "-filter_complex", ";".join(parts), "-map", "[out]", "-ar", "48000", "-t", f"{total:.3f}", str(out)])
+    parts.append("[voice][ducked]amix=inputs=2:normalize=0[out]")
+    raw = out.with_name(out.stem + "_raw.wav")
+    run_ffmpeg([*args, "-filter_complex", ";".join(parts), "-map", "[out]", "-ar", "48000", "-t", f"{total:.3f}", str(raw)])
+    normalize(raw, out)
+
+
+def normalize(src: Path, out: Path, target: float = -14.0, peak: float = -1.5) -> None:
+    """Two-pass loudnorm. One pass landed at -15.8 LUFS / -0.8 dBTP on the first real-score cut (FAILURES.md F10):
+    pass 1 measures the whole mix, pass 2 applies one linear gain from those numbers. Peak target -1.5 leaves room
+    for the AAC encoder, which adds a little to true peak."""
+    import json
+    import subprocess
+
+    from pipeline.common import ffmpeg_bin
+
+    spec = f"loudnorm=I={target}:TP={peak}:LRA=11"
+    log = subprocess.run([ffmpeg_bin(), "-hide_banner", "-nostats", "-i", str(src), "-af", f"{spec}:print_format=json", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    m = json.loads(log[log.rindex("{"):log.rindex("}") + 1])
+    second = (f"{spec}:linear=true:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
+              f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}")
+    run_ffmpeg(["-i", str(src), "-af", second, "-ar", "48000", str(out)])
 
 
 def run(mode: str = "film") -> dict[str, Path]:
